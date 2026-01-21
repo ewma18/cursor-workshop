@@ -1,0 +1,26 @@
+{
+  "name": "mock-portal",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@nimbus-ds/components": "^5.47.0",
+    "@nimbus-ds/icons": "^1.16.0",
+    "@nimbus-ds/patterns": "^1.28.0",
+    "@nimbus-ds/styles": "^9.52.0",
+    "next": "^16.1.4",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "typescript": "^5"
+  }
+}

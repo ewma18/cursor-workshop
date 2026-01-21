@@ -1,0 +1,20 @@
+@import "@nimbus-ds/styles/dist/index.css";
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html,
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+  font-family: var(--font-family-centranube);
+  background-color: var(--color-neutral-surface);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}

@@ -13,9 +13,11 @@ interface PageLayoutProps {
   children: React.ReactNode;
   activeItem?: string;
   breadcrumb?: BreadcrumbItem;
+  rightSidebar?: React.ReactNode;
+  pageHeader?: React.ReactNode;
 }
 
-export default function PageLayout({ children, activeItem, breadcrumb }: PageLayoutProps) {
+export default function PageLayout({ children, activeItem, breadcrumb, rightSidebar, pageHeader }: PageLayoutProps) {
   return (
     <Box display="flex" minHeight="100vh">
       <Sidebar activeItem={activeItem} />
@@ -31,8 +33,52 @@ export default function PageLayout({ children, activeItem, breadcrumb }: PageLay
         }}
       >
         <Header breadcrumb={breadcrumb} />
-        <div style={{ width: "100%", maxWidth: "1300px", margin: "0 auto", padding: "24px", display: "flex", flexDirection: "column", gap: "24px" }}>
-          {children}
+        {pageHeader && (
+          <div
+            style={{
+              backgroundColor: "#f6f6f9",
+              padding: "24px",
+              paddingBottom: "0",
+            }}
+          >
+            <div
+              style={{
+                maxWidth: "1300px",
+                margin: "0 auto",
+                width: "100%",
+              }}
+            >
+              {pageHeader}
+            </div>
+          </div>
+        )}
+        <div
+          style={{
+            display: "flex",
+            gap: "24px",
+            padding: "24px",
+            maxWidth: "1300px",
+            margin: "0 auto",
+            width: "100%",
+          }}
+        >
+          <div style={{ flex: 1, minWidth: 0, display: "flex", flexDirection: "column", gap: "24px" }}>
+            {children}
+          </div>
+          {rightSidebar && (
+            <div
+              style={{
+                width: "280px",
+                flexShrink: 0,
+                position: "sticky",
+                top: "24px",
+                alignSelf: "flex-start",
+                marginTop: "48px",
+              }}
+            >
+              {rightSidebar}
+            </div>
+          )}
         </div>
       </div>
     </Box>

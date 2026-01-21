@@ -27,12 +27,11 @@ export default function Home() {
       </Title>
 
       {/* Stats Cards Row */}
-      <Box
-        display="grid"
-        gap="4"
-        gridTemplateColumns={{
-          xs: "1fr",
-          md: "1fr 1fr 1fr",
+      <div
+        style={{
+          display: "grid",
+          gap: "16px",
+          gridTemplateColumns: "450px 450px 350px",
         }}
       >
         {/* Aplicativos Card */}
@@ -115,15 +114,14 @@ export default function Home() {
           balance="R$ 0,00"
           minWithdraw="Resgate disponível a partir de R$ 100"
         />
-      </Box>
+      </div>
 
       {/* Info Cards Row */}
-      <Box
-        display="grid"
-        gap="4"
-        gridTemplateColumns={{
-          xs: "1fr",
-          md: "1fr 1fr 1fr",
+      <div
+        style={{
+          display: "grid",
+          gap: "16px",
+          gridTemplateColumns: "450px 450px 350px",
         }}
       >
         {/* Link de afiliado */}
@@ -151,20 +149,20 @@ export default function Home() {
           primaryAction={{ label: "Acessar loja demo" }}
           secondaryAction={{ label: "Saiba mais", href: "#", external: true }}
         />
-      </Box>
+      </div>
 
       {/* Benefits Section */}
-      <Box display="flex" flexDirection="column" gap="4">
+      <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
         <Title as="h2" fontSize="h3" color="neutral-textHigh">
           Benefícios Nuvemshop especialistas
         </Title>
 
-        <Box
-          display="grid"
-          gap="4"
-          gridTemplateColumns={{
-            xs: "1fr",
-            md: "1fr 1fr",
+        <div
+          style={{
+            display: "grid",
+            gap: "16px",
+            gridTemplateColumns: "1fr",
+            width: "calc(450px + 450px + 16px)",
           }}
         >
           {/* Cupom de desconto */}
@@ -179,8 +177,8 @@ export default function Home() {
             title="Selos de especialista"
             description="Mostre que você é um Especialista Nuvemshop para os seus clientes. Baixe o selo para usar no seu site, blog e redes sociais."
           />
-        </Box>
-      </Box>
+        </div>
+      </div>
     </PageLayout>
   );
 }

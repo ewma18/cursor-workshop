@@ -109,112 +109,93 @@ function MetricCard({
 
 export default function ApplicationDetailPage() {
   const router = useRouter();
+
+  const pageHeader = (
+    <Box display="flex" flexDirection="column" gap="2">
+      <Title as="h1" fontSize="h1" color="neutral-textHigh">
+        {mockApp.name}
+      </Title>
+      <Box>
+        <Tag appearance="neutral">Em desenvolvimento</Tag>
+      </Box>
+    </Box>
+  );
   
   return (
     <PageLayout
       activeItem="aplicativos"
       breadcrumb={{ label: "Aplicativos", href: "/applications" }}
+      rightSidebar={<AccessKeysCard />}
+      pageHeader={pageHeader}
     >
-      {/* Page Title */}
-          <Box display="flex" alignItems="center" gap="4">
-            <Title as="h1" fontSize="h1" color="neutral-textHigh">
-              {mockApp.name}
-            </Title>
-          </Box>
-          <Box marginBottom="4">
-            <Tag appearance="neutral">Em desenvolvimento</Tag>
-          </Box>
-
           {/* Desenvolver e integrar Section */}
           <Box display="flex" flexDirection="column" gap="4">
             <Title as="h2" fontSize="h3" color="neutral-textHigh">
               Desenvolver e integrar
             </Title>
 
-            {/* Two-column layout: Main cards + Right sidebar */}
-            <div
-              style={{
-                display: "flex",
-                gap: "24px",
+            {/* Iniciar desenvolvimento */}
+            <Card padding="base">
+              <Box display="flex" flexDirection="column" gap="4">
+                <Box display="flex" alignItems="center" gap="2">
+                  <Icon source={<CodeIcon size="medium" />} color="neutral-textHigh" />
+                  <Title as="h3" fontSize="h5" color="neutral-textHigh">
+                    Iniciar desenvolvimento
+                  </Title>
+                </Box>
+                <Text fontSize="base" color="neutral-textLow">
+                  Encontre todos os recursos disponíveis e escolha a melhor forma de construir seu aplicativo.
+                </Text>
+                <Box>
+                  <Button appearance="neutral">Ler a documentação</Button>
+                </Box>
+              </Box>
+            </Card>
+
+            {/* Loja demo & Pronto para desenvolvimento */}
+            <Box
+              display="grid"
+              gap="4"
+              gridTemplateColumns={{
+                xs: "1fr",
+                md: "1fr 1fr",
               }}
             >
-              {/* Left Column - Main cards */}
-              <div style={{ flex: 1, minWidth: 0, display: "flex", flexDirection: "column", gap: "16px" }}>
-                {/* Iniciar desenvolvimento */}
-                <Card padding="base">
-                  <Box display="flex" flexDirection="column" gap="4">
-                    <Box display="flex" alignItems="center" gap="2">
-                      <Icon source={<CodeIcon size="medium" />} color="neutral-textHigh" />
-                      <Title as="h3" fontSize="h5" color="neutral-textHigh">
-                        Iniciar desenvolvimento
-                      </Title>
+              {/* Loja demo */}
+              <Card padding="base">
+                <Box display="flex" flexDirection="column" gap="4">
+                  <Title as="h3" fontSize="h5" color="neutral-textHigh">
+                    Loja demo
+                  </Title>
+                  <Text fontSize="caption" color="neutral-textLow">
+                    Escolha uma loja demo para instalar e testar seu aplicativo enquanto desenvolve.
+                  </Text>
+                  <Box display="flex" gap="2" alignItems="center">
+                    <Box flex="1">
+                      <Select name="demo-store" id="demo-store">
+                        <Select.Option value="teste-migracao" label="Teste Migração Aurora" selected />
+                      </Select>
                     </Box>
-                    <Text fontSize="base" color="neutral-textLow">
-                      Encontre todos os recursos disponíveis e escolha a melhor forma de construir seu aplicativo.
-                    </Text>
-                    <Box>
-                      <Button appearance="neutral">Ler a documentação</Button>
-                    </Box>
+                    <Button appearance="transparent">
+                      <Icon source={<ExternalLinkIcon size="small" />} color="currentColor" />
+                    </Button>
                   </Box>
-                </Card>
-
-                {/* Loja demo & Pronto para desenvolvimento */}
-                <Box
-                  display="grid"
-                  gap="4"
-                  gridTemplateColumns={{
-                    xs: "1fr",
-                    md: "1fr 1fr",
-                  }}
-                >
-                  {/* Loja demo */}
-                  <Card padding="base">
-                    <Box display="flex" flexDirection="column" gap="4">
-                      <Title as="h3" fontSize="h5" color="neutral-textHigh">
-                        Loja demo
-                      </Title>
-                      <Text fontSize="caption" color="neutral-textLow">
-                        Escolha uma loja demo para instalar e testar seu aplicativo enquanto desenvolve.
-                      </Text>
-                      <Box display="flex" gap="2" alignItems="center">
-                        <Box flex="1">
-                          <Select name="demo-store" id="demo-store">
-                            <Select.Option value="teste-migracao" label="Teste Migração Aurora" selected />
-                          </Select>
-                        </Box>
-                        <Button appearance="transparent">
-                          <Icon source={<ExternalLinkIcon size="small" />} color="currentColor" />
-                        </Button>
-                      </Box>
-                    </Box>
-                  </Card>
-
-                  {/* Pronto para desenvolvimento */}
-                  <Card padding="base">
-                    <Box display="flex" flexDirection="column" gap="4">
-                      <Title as="h3" fontSize="h5" color="neutral-textHigh">
-                        Pronto para desenvolvimento
-                      </Title>
-                      <Tag appearance="success">API conectada</Tag>
-                      <Text fontSize="caption" color="neutral-textLow">
-                        Inicie a integração ou desenvolvimento no seu ambiente local. Consulte a documentação.
-                      </Text>
-                    </Box>
-                  </Card>
                 </Box>
-              </div>
+              </Card>
 
-              {/* Right Sidebar - Access Keys */}
-              <div
-                style={{
-                  width: "280px",
-                  flexShrink: 0,
-                  alignSelf: "flex-start",
-                }}
-              >
-                <AccessKeysCard />
-              </div>
-            </div>
+              {/* Pronto para desenvolvimento */}
+              <Card padding="base">
+                <Box display="flex" flexDirection="column" gap="4">
+                  <Title as="h3" fontSize="h5" color="neutral-textHigh">
+                    Pronto para desenvolvimento
+                  </Title>
+                  <Tag appearance="success">API conectada</Tag>
+                  <Text fontSize="caption" color="neutral-textLow">
+                    Inicie a integração ou desenvolvimento no seu ambiente local. Consulte a documentação.
+                  </Text>
+                </Box>
+              </Card>
+            </Box>
           </Box>
 
           {/* Editar aplicativo Section */}

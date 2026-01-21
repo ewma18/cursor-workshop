@@ -31,7 +31,7 @@ export default function PageLayout({ children, activeItem, breadcrumb }: PageLay
         }}
       >
         <Header breadcrumb={breadcrumb} />
-        <div style={{ width: "100%", maxWidth: "900px", margin: "0 auto", padding: "24px", display: "flex", flexDirection: "column", gap: "24px" }}>
+        <div style={{ width: "100%", maxWidth: "1300px", margin: "0 auto", padding: "24px", display: "flex", flexDirection: "column", gap: "24px" }}>
           {children}
         </div>
       </div>

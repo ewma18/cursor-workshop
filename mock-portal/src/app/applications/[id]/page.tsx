@@ -12,6 +12,7 @@ import {
 } from "@nimbus-ds/icons";
 import PageLayout from "@/components/PageLayout";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 // Mock application data
 const mockApp = {
@@ -107,6 +108,8 @@ function MetricCard({
 }
 
 export default function ApplicationDetailPage() {
+  const router = useRouter();
+  
   return (
     <PageLayout
       activeItem="aplicativos"
@@ -248,7 +251,7 @@ export default function ApplicationDetailPage() {
                     Preencha informações de categoria, tipo de publicação e URLs do aplicativo.
                   </Text>
                   <Box>
-                    <Button appearance="neutral">Editar dados</Button>
+                    <Button appearance="neutral" onClick={() => router.push(`/applications/${mockApp.id}/basic-data`)}>Editar dados</Button>
                   </Box>
                 </Box>
               </Card>

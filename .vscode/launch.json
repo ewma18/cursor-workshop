@@ -1,0 +1,12 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Open in Brave",
+      "type": "chrome",
+      "request": "launch",
+      "file": "${workspaceFolder}/evasive-popup.html",
+      "runtimeExecutable": "/usr/bin/brave"
+    }
+  ]
+}

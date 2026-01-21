@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Catch Me If You Can!</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --popup-bg: #1a1a2e;
+      --popup-border: #e94560;
+      --button-bg: #e94560;
+      --button-hover: #ff6b6b;
+      --text-primary: #eaeaea;
+      --text-accent: #ffd700;
+      --bg-dark: #0f0f1a;
+      --bg-gradient-1: #16213e;
+      --bg-gradient-2: #1a1a2e;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      background: linear-gradient(135deg, var(--bg-dark) 0%, var(--bg-gradient-1) 50%, var(--bg-gradient-2) 100%);
+      font-family: 'Quicksand', sans-serif;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Animated background dots */
+    .bg-pattern {
+      position: fixed;
+      inset: 0;
+      background-image: 
+        radial-gradient(circle at 20% 30%, rgba(233, 69, 96, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 70%, rgba(255, 215, 0, 0.08) 0%, transparent 50%),
+        radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.02) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .floating-shapes {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .shape {
+      position: absolute;
+      border-radius: 50%;
+      opacity: 0.1;
+      animation: float 20s infinite ease-in-out;
+    }
+
+    .shape:nth-child(1) {
+      width: 300px;
+      height: 300px;
+      background: var(--popup-border);
+      top: -150px;
+      left: -100px;
+      animation-delay: 0s;
+    }
+
+    .shape:nth-child(2) {
+      width: 200px;
+      height: 200px;
+      background: var(--text-accent);
+      bottom: -100px;
+      right: -50px;
+      animation-delay: -5s;
+    }
+
+    .shape:nth-child(3) {
+      width: 150px;
+      height: 150px;
+      background: #4ecdc4;
+      top: 50%;
+      left: 60%;
+      animation-delay: -10s;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translate(0, 0) rotate(0deg); }
+      25% { transform: translate(50px, 50px) rotate(90deg); }
+      50% { transform: translate(0, 100px) rotate(180deg); }
+      75% { transform: translate(-50px, 50px) rotate(270deg); }
+    }
+
+    /* Header */
+    .header {
+      text-align: center;
+      padding: 40px 20px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .header h1 {
+      font-family: 'Bangers', cursive;
+      font-size: clamp(2.5rem, 8vw, 5rem);
+      color: var(--text-primary);
+      text-shadow: 
+        3px 3px 0 var(--popup-border),
+        6px 6px 0 rgba(233, 69, 96, 0.3);
+      letter-spacing: 4px;
+    }
+
+    .header p {
+      color: var(--text-accent);
+      font-size: 1.2rem;
+      margin-top: 10px;
+      opacity: 0.9;
+    }
+
+    /* Score counter */
+    .score-board {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: rgba(26, 26, 46, 0.9);
+      border: 2px solid var(--popup-border);
+      border-radius: 12px;
+      padding: 15px 25px;
+      z-index: 100;
+      backdrop-filter: blur(10px);
+    }
+
+    .score-board span {
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+
+    .score-board .count {
+      color: var(--text-accent);
+      font-family: 'Bangers', cursive;
+      font-size: 1.8rem;
+      margin-left: 8px;
+    }
+
+    /* The Popup */
+    .popup {
+      position: fixed;
+      width: 320px;
+      background: var(--popup-bg);
+      border: 3px solid var(--popup-border);
+      border-radius: 20px;
+      box-shadow: 
+        0 20px 60px rgba(233, 69, 96, 0.3),
+        0 0 100px rgba(233, 69, 96, 0.1);
+      z-index: 1000;
+      transition: transform 0.15s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      overflow: hidden;
+    }
+
+    .popup::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--popup-border), var(--text-accent), var(--popup-border));
+    }
+
+    .popup-content {
+      padding: 30px;
+      text-align: center;
+    }
+
+    .popup-emoji {
+      font-size: 4rem;
+      margin-bottom: 15px;
+      display: block;
+      animation: wiggle 0.5s ease-in-out infinite;
+    }
+
+    @keyframes wiggle {
+      0%, 100% { transform: rotate(-5deg); }
+      50% { transform: rotate(5deg); }
+    }
+
+    .popup h2 {
+      color: var(--text-primary);
+      font-family: 'Bangers', cursive;
+      font-size: 1.8rem;
+      letter-spacing: 2px;
+      margin-bottom: 10px;
+    }
+
+    .popup p {
+      color: rgba(234, 234, 234, 0.7);
+      font-size: 0.95rem;
+      line-height: 1.5;
+      margin-bottom: 25px;
+    }
+
+    .close-btn {
+      background: var(--button-bg);
+      color: white;
+      border: none;
+      padding: 14px 40px;
+      font-size: 1rem;
+      font-family: 'Quicksand', sans-serif;
+      font-weight: 600;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .close-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left 0.5s;
+    }
+
+    .close-btn:hover::before {
+      left: 100%;
+    }
+
+    .close-btn:hover {
+      background: var(--button-hover);
+      transform: scale(1.05);
+      box-shadow: 0 5px 30px rgba(233, 69, 96, 0.5);
+    }
+
+    /* Taunt messages */
+    .taunt {
+      position: fixed;
+      font-family: 'Bangers', cursive;
+      font-size: 1.5rem;
+      color: var(--text-accent);
+      pointer-events: none;
+      z-index: 999;
+      animation: tauntFade 1s ease-out forwards;
+      text-shadow: 2px 2px 0 rgba(0,0,0,0.5);
+    }
+
+    @keyframes tauntFade {
+      0% { 
+        opacity: 1; 
+        transform: translateY(0) scale(1); 
+      }
+      100% { 
+        opacity: 0; 
+        transform: translateY(-50px) scale(1.2); 
+      }
+    }
+
+    /* Win screen */
+    .win-screen {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 15, 26, 0.95);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 2000;
+      backdrop-filter: blur(10px);
+    }
+
+    .win-screen.active {
+      display: flex;
+    }
+
+    .win-content {
+      text-align: center;
+      animation: winPop 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    }
+
+    @keyframes winPop {
+      0% { transform: scale(0); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    .win-content h2 {
+      font-family: 'Bangers', cursive;
+      font-size: 4rem;
+      color: var(--text-accent);
+      text-shadow: 4px 4px 0 var(--popup-border);
+      margin-bottom: 20px;
+    }
+
+    .win-content p {
+      color: var(--text-primary);
+      font-size: 1.3rem;
+      margin-bottom: 30px;
+    }
+
+    .restart-btn {
+      background: linear-gradient(135deg, #4ecdc4, #44a08d);
+      color: white;
+      border: none;
+      padding: 16px 50px;
+      font-size: 1.1rem;
+      font-family: 'Quicksand', sans-serif;
+      font-weight: 600;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    .restart-btn:hover {
+      transform: scale(1.1);
+      box-shadow: 0 10px 40px rgba(78, 205, 196, 0.4);
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-pattern"></div>
+  <div class="floating-shapes">
+    <div class="shape"></div>
+    <div class="shape"></div>
+    <div class="shape"></div>
+  </div>
+
+  <header class="header">
+    <h1>Catch Me If You Can!</h1>
+    <p>Try to close the popup... if you can!</p>
+  </header>
+
+  <div class="score-board">
+    <span>Escapes:</span>
+    <span class="count" id="escapeCount">0</span>
+  </div>
+
+  <div class="popup" id="popup">
+    <div class="popup-content">
+      <span class="popup-emoji">😜</span>
+      <h2>You'll Never Close Me!</h2>
+      <p>Go ahead, try clicking that button. I dare you!</p>
+      <button class="close-btn" id="closeBtn">Close Me</button>
+    </div>
+  </div>
+
+  <div class="win-screen" id="winScreen">
+    <div class="win-content">
+      <h2>🎉 You Got Me! 🎉</h2>
+      <p>Impressive reflexes! You caught the uncatchable!</p>
+      <button class="restart-btn" id="restartBtn">Play Again</button>
+    </div>
+  </div>
+
+  <script>
+    const popup = document.getElementById('popup');
+    const closeBtn = document.getElementById('closeBtn');
+    const escapeCountEl = document.getElementById('escapeCount');
+    const winScreen = document.getElementById('winScreen');
+    const restartBtn = document.getElementById('restartBtn');
+
+    let escapeCount = 0;
+    let isMoving = false;
+    const escapeDistance = 150; // How close before popup runs away
+    const catchChance = 0.02; // 2% chance to actually catch it
+
+    const taunts = [
+      "Nope! 😝",
+      "Too slow!",
+      "Missed me!",
+      "Haha! 🏃",
+      "Try again!",
+      "So close!",
+      "Wheee!",
+      "Catch me!",
+      "Zoom! 💨",
+      "Nyah nyah!"
+    ];
+
+    function getRandomPosition() {
+      const padding = 40;
+      const maxX = window.innerWidth - popup.offsetWidth - padding;
+      const maxY = window.innerHeight - popup.offsetHeight - padding;
+      
+      return {
+        x: Math.max(padding, Math.random() * maxX),
+        y: Math.max(padding, Math.random() * maxY)
+      };
+    }
+
+    function movePopup() {
+      if (isMoving) return;
+      isMoving = true;
+      
+      const pos = getRandomPosition();
+      popup.style.left = pos.x + 'px';
+      popup.style.top = pos.y + 'px';
+      
+      escapeCount++;
+      escapeCountEl.textContent = escapeCount;
+      
+      showTaunt(pos.x + popup.offsetWidth / 2, pos.y);
+      
+      setTimeout(() => {
+        isMoving = false;
+      }, 150);
+    }
+
+    function showTaunt(x, y) {
+      const taunt = document.createElement('div');
+      taunt.className = 'taunt';
+      taunt.textContent = taunts[Math.floor(Math.random() * taunts.length)];
+      taunt.style.left = x + 'px';
+      taunt.style.top = y + 'px';
+      document.body.appendChild(taunt);
+      
+      setTimeout(() => taunt.remove(), 1000);
+    }
+
+    function checkDistance(e) {
+      const rect = popup.getBoundingClientRect();
+      const popupCenterX = rect.left + rect.width / 2;
+      const popupCenterY = rect.top + rect.height / 2;
+      
+      const distance = Math.sqrt(
+        Math.pow(e.clientX - popupCenterX, 2) + 
+        Math.pow(e.clientY - popupCenterY, 2)
+      );
+      
+      if (distance < escapeDistance) {
+        movePopup();
+      }
+    }
+
+    function initPopup() {
+      const pos = getRandomPosition();
+      popup.style.left = pos.x + 'px';
+      popup.style.top = pos.y + 'px';
+    }
+
+    // Event listeners
+    document.addEventListener('mousemove', checkDistance);
+
+    closeBtn.addEventListener('click', (e) => {
+      // Small random chance to actually catch it (makes it possible but rare)
+      if (Math.random() < catchChance || escapeCount > 50) {
+        winScreen.classList.add('active');
+      } else {
+        movePopup();
+      }
+    });
+
+    restartBtn.addEventListener('click', () => {
+      escapeCount = 0;
+      escapeCountEl.textContent = 0;
+      winScreen.classList.remove('active');
+      initPopup();
+    });
+
+    // Initialize
+    initPopup();
+  </script>
+</body>
+</html>

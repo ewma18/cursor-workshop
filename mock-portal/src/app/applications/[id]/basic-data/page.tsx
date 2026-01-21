@@ -54,7 +54,7 @@ function AccordionItem({ title, children, defaultOpen = false }: AccordionItemPr
         />
       </Box>
       {isOpen && (
-        <Box padding="4" paddingTop="0">
+        <Box padding="4" paddingTop="none">
           {children}
         </Box>
       )}
@@ -342,9 +342,11 @@ export default function BasicDataPage() {
                   checked={writeContent}
                   onChange={(e) => setWriteContent(e.target.checked)}
                 />
-                <Text fontSize="caption" color="neutral-textLow" paddingLeft="6">
-                  Modificar, eliminar e criar as páginas de conteúdo da loja.
-                </Text>
+                <Box paddingLeft="6">
+                  <Text fontSize="caption" color="neutral-textLow">
+                    Modificar, eliminar e criar as páginas de conteúdo da loja.
+                  </Text>
+                </Box>
 
                 <Checkbox
                   name="read-content"
@@ -353,9 +355,11 @@ export default function BasicDataPage() {
                   checked={readContent}
                   onChange={(e) => setReadContent(e.target.checked)}
                 />
-                <Text fontSize="caption" color="neutral-textLow" paddingLeft="6">
-                  Apenas leitura (não poderá alterar) as páginas de conteúdo da loja.
-                </Text>
+                <Box paddingLeft="6">
+                  <Text fontSize="caption" color="neutral-textLow">
+                    Apenas leitura (não poderá alterar) as páginas de conteúdo da loja.
+                  </Text>
+                </Box>
               </Box>
             </AccordionItem>
 
